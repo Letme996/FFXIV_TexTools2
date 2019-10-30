@@ -36,18 +36,49 @@ namespace FFXIV_TexTools2.Helpers
 
         public static string modDatDir = Properties.Settings.Default.FFXIV_Directory + "/{0}.win32.dat{1}";
 
-        public static bool otherClientSupport = false;
+        public static bool otherClientSupport = true;
 
         public static Dictionary<string, string> ModDatDict = new Dictionary<string, string>
         {
             {Strings.ItemsDat, "4" },
-            {Strings.UIDat, "1" }
+            {Strings.UIDat, "2" }
         };
 
         public static Dictionary<string, int> ModIndexDict = new Dictionary<string, int>
         {
             {Strings.ItemsDat, 5 },
-            {Strings.UIDat, 2 }
+            {Strings.UIDat, 3 }
+        };
+
+        public static List<string> DAEPluginTargets = new List<string>
+        {
+            Strings.OpenCollada,
+            Strings.AutodeskCollada
+        };
+
+        public static List<string> GearCategories = new List<string>
+        {
+            Strings.Main_Hand,
+            Strings.Off_Hand,
+            Strings.Head,
+            Strings.Body,
+            Strings.Hands,
+            Strings.Waist,
+            Strings.Legs,
+            Strings.Feet,
+            Strings.Ears,
+            Strings.Neck,
+            Strings.Wrists,
+            Strings.Rings,
+            Strings.Two_Handed,
+            Strings.Main_Off,
+            Strings.Head_Body,
+            Strings.Body_Hands_Legs_Feet,
+            Strings.Soul_Crystal,
+            Strings.Legs_Feet,
+            Strings.All,
+            Strings.Body_Hands_Legs,
+            Strings.Body_Legs_Feet
         };
 
         public static ObservableCollection<string> SubCategoryList = new ObservableCollection<string>
@@ -154,13 +185,14 @@ namespace FFXIV_TexTools2.Helpers
             {Strings.Ears, "ear"},
             {Strings.Neck, "nek"},
             {Strings.Rings, "rir"},
+            {Strings.RingsLeft, "ril"},
             {Strings.Wrists, "wrs"},
             {Strings.Head_Body, "top"},
             {Strings.Body_Hands, "top"},
             {Strings.Body_Hands_Legs, "top"},
             {Strings.Body_Legs_Feet, "top"},
             {Strings.Body_Hands_Legs_Feet, "top"},
-            {Strings.Legs_Feet, "top"},
+            {Strings.Legs_Feet, "dwn"},
             {Strings.All, "top"}
         };
 

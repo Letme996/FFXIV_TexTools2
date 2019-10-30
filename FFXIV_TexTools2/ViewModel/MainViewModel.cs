@@ -100,11 +100,19 @@ namespace FFXIV_TexTools2.ViewModel
         }
 
         /// <summary>
-        /// Command for the ModList Menu
+        /// Command for the Model ID Search
         /// </summary>
         public ICommand IDSearchCommand
         {
             get { return new RelayCommand(IDSearch); }
+        }
+
+        /// <summary>
+        /// Command for UI Search
+        /// </summary>
+        public ICommand UISearchCommand
+        {
+            get { return new RelayCommand(UISearch); }
         }
 
 
@@ -313,6 +321,15 @@ namespace FFXIV_TexTools2.ViewModel
             modelSearch.Show();
         }
 
+        private void UISearch(object obj)
+        {
+            UISearch uiSearch = new UISearch(this);
+            uiSearch.Owner = App.Current.MainWindow;
+            uiSearch.Show();
+        }
+
+
+
 
         /// <summary>
         /// Asks for game directory and sets default save directory
@@ -512,16 +529,9 @@ namespace FFXIV_TexTools2.ViewModel
         /// </summary>
         private void MakeModContainers()
         {
-            foreach (var datName in Info.ModDatDict)
-            {
-                var datPath = string.Format(Info.datDir, datName.Key, datName.Value);
+            var ffxivDir = new DirectoryInfo(Properties.Settings.Default.FFXIV_Directory);
 
-                if (!File.Exists(datPath))
-                {
-                    CreateDat.MakeDat();
-                    CreateDat.ChangeDatAmounts();
-                }
-            }
+            var newModListDirectory = new DirectoryInfo(Path.Combine(ffxivDir.Parent.Parent.FullName, "XivMods.json"));
 
             if (Properties.Settings.Default.Modlist_Directory.Equals(""))
             {
@@ -533,6 +543,25 @@ namespace FFXIV_TexTools2.ViewModel
             if (!File.Exists(Properties.Settings.Default.Modlist_Directory))
             {
                 CreateDat.CreateModList();
+            }
+
+            if (File.Exists(newModListDirectory.FullName))
+            {
+                FlexibleMessageBox.Show("You are using an older version of TexTools.\n\n" +
+                                        "Importing with this version may cause issues.", "Conflicting Versions", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+
+            foreach (var datName in Info.ModDatDict)
+            {
+                var datPath = string.Format(Info.datDir, datName.Key, datName.Value);
+
+                if (!File.Exists(datPath))
+                {
+                    CreateDat.MakeDat();
+                    CreateDat.ChangeDatAmounts();
+                }
             }
         }
 
@@ -790,7 +819,7 @@ namespace FFXIV_TexTools2.ViewModel
                             }
                             else if (indexFile.Key.Equals(Strings.UIDat))
                             {
-                                if (datNum == 1)
+                                if (datNum == 2)
                                 {
                                     problem = true;
                                     break;
@@ -833,7 +862,7 @@ namespace FFXIV_TexTools2.ViewModel
                             }
                             else if (indexFile.Key.Equals(Strings.UIDat))
                             {
-                                if (datNum == 1)
+                                if (datNum == 2)
                                 {
                                     problem = true;
                                     break;
